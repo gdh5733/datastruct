@@ -1,7 +1,5 @@
 package 数据结构.queue;
-
 import java.util.Scanner;
-
 /**
  * 数组实现
  */
@@ -11,7 +9,7 @@ public class ArrayQueueDemo {
     public static void main(String[] args) {
        //测试一把
         //创建一个队列
-        ArrayQueue arrayQueue = new ArrayQueue(3);
+        ArrayQueue queue = new ArrayQueue(3);
         char key = ' ';
         Scanner scanner = new Scanner(System.in);
         boolean loop = true;
@@ -23,9 +21,45 @@ public class ArrayQueueDemo {
             System.out.println("a(add): 添加数据");
             System.out.println("g(get): 从队列取出数据");
             System.out.println("h(head): 查看队列头的数据");
+
+            key=scanner.next().charAt(0);//从键盘获取一个字符
+
+            switch (key){
+
+                case 's':
+                    queue.showQueue();
+                    break;
+
+                case 'a':
+                    System.out.println("请输入一个整数");
+                    int value = scanner.nextInt();
+                    queue.addQueue(value);
+                    break;
+
+                case 'g'://取数据
+                    try {
+                        int res = queue.getQueue();
+                        System.out.printf("取出的数据是%d\n",res);
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
+
+                case 'h'://查看队列头
+                    try {
+                        int res = queue.headQueuepeek();
+                        System.out.printf("输出队列头的数据是：%d\n",res);
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
+
+                case 'e':
+                    scanner.close();
+                    loop = false;
+                    break;
+                default:
+                    break;
         }
-
-
+        }
     }
 }
 

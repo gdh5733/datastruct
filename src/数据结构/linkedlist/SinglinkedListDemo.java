@@ -6,7 +6,34 @@ package 数据结构.linkedlist;
 public class SinglinkedListDemo {
 
     public static void main(String[] args) {
+        //进行测试
+        //先创建节点
+        HeroNode hero1 = new HeroNode(1, "宋江", "及时雨");
+        HeroNode hero2 = new HeroNode(2, "卢俊义", "玉麒麟");
+        HeroNode hero3 = new HeroNode(3, "吴用", "智多星");
+        HeroNode hero4 = new HeroNode(4, "林冲", "豹子头");
 
+        //创建要给链表
+        SinglinkedList singlinkedList = new SinglinkedList();
+
+        //添加英雄
+//        singlinkedList.add(hero1);
+//        singlinkedList.add(hero2);
+//        singlinkedList.add(hero3);
+//        singlinkedList.add(hero4);
+
+
+        singlinkedList.addByOrder(hero1);
+        singlinkedList.addByOrder(hero2);
+        singlinkedList.addByOrder(hero3);
+        singlinkedList.addByOrder(hero4);
+
+        singlinkedList.addByOrder(hero4);
+
+
+
+        //显示一把
+        singlinkedList.list();
     }
 }
 
@@ -29,9 +56,7 @@ class HeroNode {
         return "HeroNode{" +
                 "no=" + no +
                 ", name='" + name + '\'' +
-                ", nickName='" + nickName + '\'' +
-                ", next=" + next +
-                '}';
+                ", nickName='" + nickName;
     }
 }
 
@@ -63,6 +88,37 @@ class SinglinkedList {
         //将最后节点的next指向新的节点
         temp.next = heroNode;
 
+    }
+
+
+    //插入的时候根据排名，将英雄插入到指定的位置
+    //如果有这个排名，则提示添加失败，并给出提示
+    public void addByOrder(HeroNode heroNode) {
+        //因为头节点不能动，因此我们仍然通过一个辅助指针变量来帮助找到添加的位置
+        //因为单链表，因为我们找到的temp是位于添加位置的前一个节点，否则插入不了
+        HeroNode temp = head;
+
+        boolean flag = false;//flag标志添加的编号是否存在，默认为false
+        while (true) {
+            if (temp.next == null) {//说明temp已经在链表的最后
+                break;
+            }
+            if (temp.next.no > heroNode.no) {//位置找到，就在temp的位置插入
+                break;
+            } else if (temp.next.no == heroNode.no) {//说明编号已经存在
+                flag = true;
+                break;
+            }
+            temp = temp.next;//后移
+        }
+        //判断lag的值
+        if (flag) {
+            System.out.println("编号已经存在，不能添加了 -----"+heroNode.no);
+        } else {
+            //插入到链表中，temp的后面
+            heroNode.next = temp.next;
+            temp.next = heroNode;
+        }
     }
 
 
